@@ -1,33 +1,29 @@
+// ShoppingList.js (example structure)
 import React, { useState } from "react";
-import Item from "./Item"; // Import your Item component
 
 function ShoppingList({ items }) {
-  // Step 1: Create state variable for the selected category
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  // Step 2: Function to handle category selection
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
-  // Step 3: Filter items based on the selected category
-  const filteredItems = items.filter(item => 
-    selectedCategory === "All" || item.category === selectedCategory
-  );
+  const filteredItems =
+    selectedCategory === "All"
+      ? items
+      : items.filter(item => item.category === selectedCategory);
 
   return (
     <div>
-      <select value={selectedCategory} onChange={handleCategoryChange}>
+      <select
+        role="combobox"
+        value={selectedCategory}
+        onChange={e => setSelectedCategory(e.target.value)}
+      >
         <option value="All">All</option>
-        <option value="Category1">Category1</option>
-        <option value="Category2">Category2</option>
-        <option value="Category3">Category3</option>
-        {/* Add more categories as needed */}
+        <option value="Dairy">Dairy</option>
+        <option value="Produce">Produce</option>
+        <option value="Dessert">Dessert</option>
       </select>
-
-      <ul>
-        {filteredItems.map((item, index) => (
-          <Item key={index} name={item.name} category={item.category} />
+      <ul className="Items">
+        {filteredItems.map(item => (
+          <li key={item.id}>{item.name}</li>
         ))}
       </ul>
     </div>

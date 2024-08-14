@@ -12,10 +12,15 @@ const testData = [
 
 test("displays all items when initially rendered", () => {
   const { container } = render(<ShoppingList items={testData} />);
-  expect(container.querySelector(".Items").children).toHaveLength(
-    testData.length
-  );
+  const itemsContainer = container.querySelector(".Items");
+
+  if (itemsContainer) {
+    expect(itemsContainer.children).toHaveLength(testData.length);
+  } else {
+    fail("The Items container was not rendered");
+  }
 });
+
 
 test("displays only items that match the selected category", () => {
   const { container } = render(<ShoppingList items={testData} />);
